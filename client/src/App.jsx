@@ -33,7 +33,7 @@ import PayPalCheckoutButton from './components/checkout/PayPalCheckoutButton';
 import AdminProfile from './components/admin/AdminProfile';
 import Home from './components/Home';
 import ContactForm from './components/ContactForm';
-
+import Footer from './components/navbar/Footer';
 
 function App() {
 
@@ -154,6 +154,7 @@ function App() {
 
           </Routes>)
         }
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   )

@@ -9,7 +9,7 @@ function Navbar({ cartItemCount,loggedIn,setStateLogged }) {
 
   return (
     <header>
-        <div class="logo"><Link to="/product/1" className='text-none'>CMS</Link> </div>
+        <div className="logo"><Link to="/product/1" className='text-none'>CMS</Link> </div>
         <input type="checkbox" id="nav_check" hidden/>
         <nav>
             <ul className='text-none'>
@@ -56,7 +56,7 @@ function Navbar({ cartItemCount,loggedIn,setStateLogged }) {
                        </li>
             </ul>
         </nav>
-        <label for="nav_check" class="hamburger">
+        <label htmlFor="nav_check" className="hamburger">
             <div></div>
             <div></div>
             <div></div>
