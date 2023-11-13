@@ -69,7 +69,7 @@ module.exports = (app) => {
   app.patch('/api/cart/:id/delete/:id', CartController.removeFromCart);
 
   //paypal checkout routes
-  app.post('/api/paypal/create-order', PayPalController.createOrder);
+  // app.post('/api/paypal/create-order', PayPalController.createOrder);
   app.post('/api/paypal/:id/capture-payment', PayPalController.capturePayment);
 
 

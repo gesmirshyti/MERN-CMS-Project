@@ -34,6 +34,7 @@ import AdminProfile from './components/admin/AdminProfile';
 import Home from './components/Home';
 import ContactForm from './components/ContactForm';
 import Footer from './components/navbar/Footer';
+import AboutUs from './components/AboutUs';
 
 function App() {
 
@@ -114,12 +115,10 @@ function App() {
 
             <Route path="/customer/login" default element={<CustomerLogin setStateLogged={setStateLogged} stateLogged={stateLogged} onLogin={(userId) => setUserId(userId)} />
             }/>
-
             {/* paypal checkout button */}
-
             <Route path="/paypal-checkout" element={<PayPalCheckoutButton setStateLogged={setStateLogged} stateLogged={stateLogged} />} />
-
-
+           
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         ) : (
           <Routes>
@@ -151,6 +150,7 @@ function App() {
             <Route path="/contact" element={<ContactForm />} />
 
             <Route path="/admin" element={<AdminProfile />} />
+            <Route path="/aboutus" element={<AboutUs />} />
 
           </Routes>)
         }

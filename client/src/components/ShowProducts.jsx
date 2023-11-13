@@ -159,7 +159,8 @@ export default function ShowProducts({ updateCartItemCount }) {
               {product.error && <p className="error-message">{product.error}</p>}
 
               <Link to={`/product/${product._id}/details`} className="btn details px-auto">View Details</Link><br />
-              <button href="#" className="btn cart px-auto">ADD TO CART</button>
+              <button onClick={() => handleQuickAddToCart(product)} className="btn cart px-auto">ADD TO CART</button>
+
             </div>
           </div>
         </div>

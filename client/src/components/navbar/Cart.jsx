@@ -6,7 +6,101 @@ function Cart({ updateCartItemCount }) {
     const [cartItems, setCartItems] = useState([]);
     const cartId = localStorage.getItem('cartId');
     const [cart, setCart] = useState({});
-
+    const styles = {
+        cart: {
+          border: '1px solid #ccc',
+          padding: '20px',
+          backgroundColor: '#fff',
+          borderRadius: '5px',
+        },
+        cartItems: {
+          listStyle: 'none',
+          padding: '0',
+        },
+        cartItem: {
+          border: '1px solid #ccc',
+          margin: '10px 0',
+          padding: '10px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        },
+        productDetails: {
+          display: 'flex',
+          alignItems: 'center',
+        },
+        productImage: {
+          marginRight: '10px',
+        },
+        productImageStyle: {
+          width: '100px',
+          height: '100px',
+          objectFit: 'cover',
+        },
+        productInfo: {
+          flex: 1,
+        },
+        productDescription: {
+          fontSize: '14px',
+          color: '#777',
+        },
+        productActions: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+        quantity: {
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: '10px',
+        },
+        quantityBtn: {
+          backgroundColor: '#007bff',
+          color: '#fff',
+          border: 'none',
+          width: '30px',
+          height: '30px',
+          fontSize: '16px',
+          cursor: 'pointer',
+        },
+        quantityText: {
+          margin: '0 10px',
+          fontSize: '18px',
+        },
+        productPrice: {
+          fontSize: '18px',
+          marginBottom: '10px',
+        },
+        errorMessage: {
+          color: 'red',
+          margin: '0',
+        },
+        removeButton: {
+          backgroundColor: '#ff0000',
+          color: '#fff',
+          border: 'none',
+          padding: '5px 10px',
+          cursor: 'pointer',
+        },
+        totalPrice: {
+          fontSize: '20px',
+          textAlign: 'right',
+          marginTop: '20px',
+        },
+        checkoutButton: {
+          display: 'block',
+          backgroundColor: 'grey',
+          color: '#fff',
+          border: 'none',
+          padding: '10px 20px',
+          textAlign: 'center',
+          textDecoration: 'none',
+          borderRadius: '5px',
+          fontSize: '18px',
+          marginTop: '20px',
+        },
+      };
+      
     useEffect(() => {
         const fetchCartItems = () => {
             axios.get(`http://localhost:8000/api/cart/${cartId}`, { withCredentials: true })
@@ -93,35 +187,43 @@ function Cart({ updateCartItemCount }) {
                 setCartItems(updatedCartItems);
             });
     };
+    const total = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
     return (
-        <div>
-            
-            <h2>Your Cart</h2>
-            <ul>
-                {cartItems.map((item) => (
-                    <li key={item.product._id}>
-                        {item.product.name} - Price: ${item.product.price}<br></br>
-                        <img
-                            src={item.product.productImage}
-                            alt={item.product.name}
-                            style={{ width: '100px', height: '100px' }}
-                        /> - Quantity: {item.quantity}<br></br>
-                        Name : {item.product.name}<br></br> - Description: {item.product.description}<br></br>
-                        {item.error && <p style={{ color: "red" }}>{item.error}</p>}
-                        <button onClick={() => {
-                            console.log('Product ID to remove:', item.product._id);
-                            removeFromCart(item.product._id);
-                        }}>Remove One</button>
-                        <button onClick={() => handleQuickAddToCart(item.product)}>Add One</button>
-
-                    </li>
-                ))}
-            </ul>
-            <p>Total Price ${cart.totalPrice}</p>
-            <Link to="/paypal-checkout">Proceed to PayPal Checkout</Link>
-
-        </div>
+        <div style={styles.cart}>
+        <h2>Your Cart</h2>
+        <ul style={styles.cartItems}>
+            {cartItems.map((item) => (
+                <li key={item.product._id} style={styles.cartItem}>
+                    <div style={styles.productDetails}>
+                        <div style={styles.productImage}>
+                            <img src={item.product.productImage} alt={item.product.name} style={styles.productImageStyle} />
+                        </div>
+                        <div style={styles.productInfo}>
+                            <h3>{item.product.name}</h3>
+                            <p style={styles.productDescription}>{item.product.description}</p>
+                        </div>
+                    </div>
+                    <div style={styles.productActions}>
+                        <div style={styles.quantity}>
+                            <button style={styles.quantityBtn} onClick={() => removeFromCart(item.product._id)}>-</button>
+                            <span style={styles.quantityText}>{item.quantity}</span>
+                            <button style={styles.quantityBtn} onClick={() => handleQuickAddToCart(item.product)}>+</button>
+                        </div>
+                        <div style={styles.productPrice}>
+                            Price: ${item.product.price}
+                        </div>
+                        {item.error && <p style={styles.errorMessage}>{item.error}</p>}
+                        <button style={styles.removeButton} onClick={() => removeFromCart(item.product._id)}>Remove</button>
+                    </div>
+                </li>
+            ))}
+        </ul>
+        <p style={styles.totalPrice}>Total Price: ${total}</p>
+        <Link to={"/paypal-checkout"} style={styles.checkoutButton}>Proceed to PayPal Checkout</Link>
+    </div>
+    
+    
     );
 }
 
